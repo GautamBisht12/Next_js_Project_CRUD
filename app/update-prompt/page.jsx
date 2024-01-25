@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 
-const EditPrompt = () => {
+const UpdatePrompt = () => {
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -16,17 +16,16 @@ const EditPrompt = () => {
     tag: "",
   });
 
-  const getPromptDetails = async () => {
-    const response = await fetch(`/api/prompt/${promptId}`);
-    const data = await response.json();
-
-    console.log(data);
-    setPost({
-      prompt: data.prompt,
-      tag: data.tag,
-    });
-  };
   useEffect(() => {
+    const getPromptDetails = async () => {
+      const response = await fetch(`/api/prompt/${promptId}`);
+      const data = await response.json();
+
+      setPost({
+        prompt: data.prompt,
+        tag: data.tag,
+      });
+    };
     if (promptId) getPromptDetails();
   }, [promptId]);
 
@@ -62,11 +61,10 @@ const EditPrompt = () => {
         post={post}
         setPost={setPost}
         submitting={submitting}
-        setSubmitting={setSubmitting}
         handleSubmit={updatePrompt}
       />
     </div>
   );
 };
 
-export default EditPrompt;
+export default UpdatePrompt;
